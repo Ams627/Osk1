@@ -5,8 +5,9 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <DataTemplate DataType="{x:Type local:Key1}">
-            <!--<TextBox Text="Hello"/>-->
-            <TextBlock Text="{Binding Label}" />
+            <Border BorderThickness="1" BorderBrush="Black" Width="50" Height="50" Margin="{Binding Margin}" MouseLeftButtonDown="{Binding }">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Label}" Margin="0,0,0,0"/>
+            </Border>
         </DataTemplate>
     </Application.Resources>
 </Application>

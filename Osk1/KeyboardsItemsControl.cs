@@ -32,12 +32,14 @@ namespace Osk1
                 {
                     yield return t;
                 }
-
-                if (child is DependencyObject depChild)
+                else if (child is DependencyObject depChild)
                 {
                     foreach (var childOfChild in GetLogicalChildren<T>(depChild))
                     {
-                        yield return childOfChild;
+                        if (childOfChild is T t2)
+                        {
+                            yield return t2;
+                        }
                     }
                 }
             }
@@ -66,9 +68,34 @@ namespace Osk1
         {
             base.OnApplyTemplate();
             var keys = GetLogicalChildren<Key1>(this);
+            bool first = true;
+            bool newline = false;
+            int previousKeyLeft = -1;
+            int previousKeyTop = -1;
+            int currentHorizontalSpacing = -1;
             foreach (var key in keys)
             {
-                System.Diagnostics.Debug.WriteLine($"Key {key}");
+                if (key.HorizontalSpacing > 0)
+                {
+                    currentHorizontalSpacing = key.HorizontalSpacing;
+                }
+                if (first)
+                {
+                    key.Left = 0;
+                    key.Top = 0;
+                    first = false;
+                }
+                else if (newline)
+                {
+                    key.Left = 0;
+                    key.Top = previousKeyTop + key.VerticalSpacing;
+                    newline = false;
+                }
+                else
+                {
+                    key.Left = previousKeyLeft + currentHorizontalSpacing;
+                }
+                previousKeyLeft = key.Left;
             }
         }
 

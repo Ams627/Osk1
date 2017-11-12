@@ -6,18 +6,20 @@
         xmlns:local="clr-namespace:Osk1"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
+    <Grid Margin="0,100,0,0">
         <StackPanel>
-            <ItemsControl Height="100" Width="100" Background="AliceBlue" Style="{DynamicResource ItemsControlStyle1}"/>
-            <Button></Button>
             <local:KeyboardItemsControl>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                <local:Key1 Label="Q"/>
-                <local:Key1/>
+                <local:Key1 Label="Q" HorizontalSpacing="120"/>
+                <local:Key1 Label="W"/>
+                <local:Key1 Label="E"/>
+                <local:Key1 Label="R"/>
+                <local:Key1 Label="T"/>
+                
             </local:KeyboardItemsControl>
         </StackPanel>
     </Grid>
