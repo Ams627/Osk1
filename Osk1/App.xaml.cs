@@ -13,5 +13,9 @@ namespace Osk1
     /// </summary>
     public partial class App : Application
     {
+        private void Border_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
