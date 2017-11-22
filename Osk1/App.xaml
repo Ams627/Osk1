@@ -8,7 +8,7 @@
             <Border BorderThickness="1" Focusable="False"
                     Background="Transparent"
                     BorderBrush="Black"
-                    Width="50" Height="50" Margin="{Binding Margin}" Tag="Yibble">
+                    Width="50" Height="50" Margin="{Binding Margin}" Tag="Key">
                 <StackPanel>
                     <local:KeyStoreControl Key="{Binding Key}"/>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Label}" />

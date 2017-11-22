@@ -48,6 +48,7 @@ namespace Osk1
         {
             if (depObj != null)
             {
+                var n = VisualTreeHelper.GetChildrenCount(depObj);
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
