@@ -14,7 +14,7 @@ namespace Osk1
         public int VerticalSpacing { get; set; }
         public Thickness Margin => new Thickness(Left, Top, 0, 0);
         public bool NewLine { get; set; }
-        public Key Key { get; set; }
+        public SendInputs.KeyCode Key { get; set; }
         public ModifierKeys Modifiers { get; set; }
 
         private static void Handler(object sender, EventArgs e)

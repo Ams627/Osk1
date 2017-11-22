@@ -8,18 +8,18 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid Margin="0,100,0,0">
         <StackPanel>
+            <TextBox Text="A" Width="200" Height="50" HorizontalAlignment="Left"/>
             <local:KeyboardItemsControl>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                <local:Key1 Label="Q" HorizontalSpacing="120"/>
-                <local:Key1 Label="W"/>
-                <local:Key1 Label="E"/>
-                <local:Key1 Label="R"/>
-                <local:Key1 Label="T"/>
-                
+                <local:Key1 Label="Q" Key="KEY_Q" HorizontalSpacing="120"/>
+                <local:Key1 Label="W" Key="KEY_W" />
+                <local:Key1 Label="E" Key="KEY_E"/>
+                <local:Key1 Label="R" Key="KEY_R"/>
+                <local:Key1 Label="T" Key="KEY_T"/>
             </local:KeyboardItemsControl>
         </StackPanel>
     </Grid>

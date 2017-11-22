@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 
 namespace Osk1
 {
-
     public class KeyboardItemsControl : ItemsControl
     {
         static KeyboardItemsControl()
@@ -67,6 +66,26 @@ namespace Osk1
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            var borders = FindVisualChildren<Border>(this);
+            foreach (var border in borders)
+            {
+                border.MouseLeftButtonDown += (s, e)=> {
+                    var type = s.GetType();
+                    System.Diagnostics.Debug.WriteLine($"s is {type}");
+                    if (e.OriginalSource is Border evtborder)
+                    {
+                        var keystores = FindVisualChildren<KeyStoreControl>(evtborder);
+                        Console.WriteLine($"evtborder.tag: {evtborder.Tag}");
+                        var keyToSend = keystores.FirstOrDefault();
+                        if (keyToSend != null)
+                        {
+                            SendInputs.SendKeyPress(keyToSend.Key);
+                        }
+                    }
+                };
+            }
+
             var keys = GetLogicalChildren<Key1>(this);
             bool first = true;
             bool newline = false;
@@ -99,6 +118,9 @@ namespace Osk1
             }
         }
 
-
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

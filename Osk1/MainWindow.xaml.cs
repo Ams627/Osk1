@@ -20,12 +20,6 @@ namespace Osk1
         public MainWindow()
         {
             InitializeComponent();
-            this.MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;
-        }
-
-        private void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            throw new NotImplementedException();
         }
     }
 }

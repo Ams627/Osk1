@@ -29,5 +29,13 @@
         </Setter>
     </Style>
 
-
+    <Style TargetType="{x:Type local:KeyStoreControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:KeyStoreControl}">
+                    <Border Height="0" Width="0"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
