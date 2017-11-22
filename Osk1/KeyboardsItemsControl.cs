@@ -22,6 +22,60 @@ namespace Osk1
             DefaultStyleKeyProperty.OverrideMetadata(typeof(KeyboardItemsControl), new FrameworkPropertyMetadata(typeof(KeyboardItemsControl)));
         }
 
+        public KeyboardItemsControl()
+        {
+            this.Loaded += KeyboardItemsControl_Loaded;
+            this.LayoutUpdated += (s, e) => { System.Diagnostics.Debug.WriteLine("updated"); };
+            ItemContainerGenerator.StatusChanged += (s, e) =>
+            {
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    UIElement uiElement =
+                        (UIElement)ItemContainerGenerator.ContainerFromIndex(i);
+
+                    if (uiElement is ContentPresenter cp)
+                    {
+                        cp.ApplyTemplate();
+                        System.Diagnostics.Debug.WriteLine("");
+                    }
+                    System.Diagnostics.Debug.WriteLine("");
+                }
+            };
+        }
+
+        private void KeyboardItemsControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    UIElement uiElement =
+                        (UIElement)ItemContainerGenerator.ContainerFromIndex(i);
+
+                    if (uiElement is ContentControl cc)
+                    {
+                        cc.ApplyTemplate();
+                        var t = cc.ContentTemplate;
+
+                        System.Diagnostics.Debug.WriteLine("");
+                    }
+
+                    if (uiElement is ContentPresenter cp && cp.Content is Key1)
+                    {
+                        cp.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            var result = cp.ApplyTemplate();
+                            var template = cp.ContentTemplate;
+
+                            System.Diagnostics.Debug.WriteLine("");
+
+                        }));
+                    }
+                }
+            }));
+        }
+        
+
         private static IEnumerable<T> GetLogicalChildren<T>(DependencyObject depObj)
         {
             var children = LogicalTreeHelper.GetChildren(depObj);
@@ -68,6 +122,18 @@ namespace Osk1
         {
             base.OnApplyTemplate();
 
+            var allVisualElements = FindVisualChildren<DependencyObject>(this);
+            foreach (var element in allVisualElements)
+            {
+                if (element is FrameworkElement fe)
+                {
+                    if (fe.Tag != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Type {fe.GetType()}, tag: {fe.Tag}");
+                    }
+                }
+            }
+
             var borders = FindVisualChildren<Border>(this);
             foreach (var border in borders)
             {
@@ -87,7 +153,30 @@ namespace Osk1
                 };
             }
 
+            for (int i = 0; i < Items.Count; i++)
+            {
+                UIElement uiElement =
+                    (UIElement)ItemContainerGenerator.ContainerFromIndex(i);
+
+                if (uiElement is ContentControl cc)
+                {
+                    cc.ApplyTemplate();
+                    var t = cc.ContentTemplate;
+
+                    System.Diagnostics.Debug.WriteLine("");
+                }
+
+                if (uiElement is ContentPresenter cp && cp.Content is Key1)
+                {
+                    var result = cp.ApplyTemplate();
+                    var template = cp.ContentTemplate;
+
+                    System.Diagnostics.Debug.WriteLine("");
+                }
+            }
+
             var keys = GetLogicalChildren<Key1>(this);
+
             bool first = true;
             bool newline = false;
             int previousKeyLeft = -1;
