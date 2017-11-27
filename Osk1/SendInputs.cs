@@ -659,6 +659,11 @@ namespace Osk1
 
         }
 
+        [DllImport("sas.dll", SetLastError = true)]
+        private static extern uint SendSAS(bool asUser);
+
+
+
         [DllImport("user32.dll", SetLastError = true)]
         private static extern uint SendInput(uint numberOfInputs, INPUT[] inputs, int sizeOfInputStructure);
 
@@ -741,6 +746,11 @@ namespace Osk1
             if (SendInput(1, inputs, Marshal.SizeOf(typeof(INPUT))) == 0)
                 throw new Exception();
 
+        }
+
+        public static void SendSaS(bool asuser)
+        {
+            SendSAS(asuser);
         }
 
     }

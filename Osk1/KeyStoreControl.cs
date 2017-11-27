@@ -17,8 +17,6 @@ namespace Osk1
 {
     public class KeyStoreControl : Control
     {
-
-
         public SendInputs.KeyCode Key
         {
             get { return (SendInputs.KeyCode )GetValue(KeyProperty); }
@@ -28,7 +26,6 @@ namespace Osk1
         // Using a DependencyProperty as the backing store for Key.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty KeyProperty =
             DependencyProperty.Register("Key", typeof(SendInputs.KeyCode ), typeof(KeyStoreControl), new PropertyMetadata(null));
-
 
         public bool IsAltPressed { get; set; }
         public bool IsCtrlPressed { get; set; }

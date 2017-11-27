@@ -25,56 +25,49 @@ namespace Osk1
         public KeyboardItemsControl()
         {
             this.Loaded += KeyboardItemsControl_Loaded;
-            this.LayoutUpdated += (s, e) => { System.Diagnostics.Debug.WriteLine("updated"); };
-            ItemContainerGenerator.StatusChanged += (s, e) =>
-            {
-                for (int i = 0; i < Items.Count; i++)
-                {
-                    UIElement uiElement =
-                        (UIElement)ItemContainerGenerator.ContainerFromIndex(i);
-
-                    if (uiElement is ContentPresenter cp)
-                    {
-                        cp.ApplyTemplate();
-                        System.Diagnostics.Debug.WriteLine("");
-                    }
-                    System.Diagnostics.Debug.WriteLine("");
-                }
-            };
         }
 
-        private void KeyboardItemsControl_Loaded(object sender, RoutedEventArgs e)
+        public bool DefaultAlignment
         {
-            this.Dispatcher.BeginInvoke((Action)(() =>
+            get { return (bool)GetValue(DefaultAlignmentProperty); }
+            set { SetValue(DefaultAlignmentProperty, value); }
+        }
+
+        public static readonly DependencyProperty DefaultAlignmentProperty =
+            DependencyProperty.Register("DefaultAlignment", typeof(bool), typeof(KeyboardItemsControl), new PropertyMetadata(true));
+
+
+
+        public bool DefaultSize
+        {
+            get { return (bool)GetValue(DefaultSizeProperty); }
+            set { SetValue(DefaultSizeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DefaultSize.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DefaultSizeProperty =
+            DependencyProperty.Register("DefaultSize", typeof(bool), typeof(KeyboardItemsControl), new PropertyMetadata(true));
+
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
             {
-                for (int i = 0; i < Items.Count; i++)
+                var n = VisualTreeHelper.GetChildrenCount(depObj);
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
                 {
-                    UIElement uiElement =
-                        (UIElement)ItemContainerGenerator.ContainerFromIndex(i);
-
-                    if (uiElement is ContentControl cc)
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
                     {
-                        cc.ApplyTemplate();
-                        var t = cc.ContentTemplate;
-
-                        System.Diagnostics.Debug.WriteLine("");
+                        yield return (T)child;
                     }
 
-                    if (uiElement is ContentPresenter cp && cp.Content is Key1)
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
                     {
-                        cp.Dispatcher.BeginInvoke((Action)(() =>
-                        {
-                            var result = cp.ApplyTemplate();
-                            var template = cp.ContentTemplate;
-
-                            System.Diagnostics.Debug.WriteLine("");
-
-                        }));
+                        yield return childOfChild;
                     }
                 }
-            }));
+            }
         }
-        
 
         private static IEnumerable<T> GetLogicalChildren<T>(DependencyObject depObj)
         {
@@ -98,111 +91,133 @@ namespace Osk1
             }
         }
 
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        private void KeyboardItemsControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (depObj != null)
+            //            Utils.PrintChildren("Loaded", this);
+
+
+            //var children = FindVisualChildren<DependencyObject>(this);
+            //foreach (var child in children)
+            //{
+            //    if (child is FrameworkElement f)
+            //    {
+            //        var margin = f.Margin;
+            //        var tag = f.Tag;
+            //        string tagDebug = tag == null ? "" : $" tag: {tag.ToString()}";
+            //        System.Diagnostics.Debug.WriteLine($"Type {f.GetType()}, Margin {margin.Left},{margin.Top},{margin.Right},{margin.Bottom} {tagDebug}");
+            //    }
+            //}
+
+            var borders = FindVisualChildren<Border>(this);
+
+            foreach (var border in borders)
             {
-                var n = VisualTreeHelper.GetChildrenCount(depObj);
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                if (border.Tag is string str0 && str0 == "KeyPressed")
                 {
-                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
+                    border.HorizontalAlignment = HorizontalAlignment.Left;
+                    border.VerticalAlignment = VerticalAlignment.Top;
+                }
+                else if (border.Tag is string str && (str == "KeyInner" || str == "KeyOuter"))
+                {
+                    if (double.IsNaN(border.Height) || border.Height <= 0)
                     {
-                        yield return (T)child;
+                        border.Height = 50;
                     }
 
-                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    if (double.IsNaN(border.Width) || border.Width <= 0)
                     {
-                        yield return childOfChild;
+                        border.Width = 50;
+                    }
+
+                    if (DefaultAlignment)
+                    {
+                        border.HorizontalAlignment = HorizontalAlignment.Left;
+                        border.VerticalAlignment = VerticalAlignment.Top;
+                    }
+
+                    if (str == "KeyInner")
+                    {
+                        if (border.ReadLocalValue(BackgroundProperty) == DependencyProperty.UnsetValue)
+                        {
+                            border.Background = Brushes.Transparent;
+                        }
+
+                        border.MouseLeftButtonDown += (mouseSender, eventargs) =>
+                        {
+                            var type = mouseSender.GetType();
+                            if (mouseSender is Border evtborder)
+                            {
+                                var keystores = FindVisualChildren<KeyStoreControl>(evtborder);
+                                Console.WriteLine($"evtborder.tag: {evtborder.Tag}");
+                                var keyToSend = keystores.FirstOrDefault();
+                                if (keyToSend != null)
+                                {
+                                    SendInputs.SendKeyPress(keyToSend.Key);
+                                }
+                            }
+                        };
+                    }
+                    else if (str == "KeyOuter")
+                    {
+                        if (border.ReadLocalValue(BorderBrushProperty) == DependencyProperty.UnsetValue)
+                        {
+                            border.BorderBrush = Brushes.CadetBlue;
+                        }
                     }
                 }
             }
         }
+    
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            var allVisualElements = FindVisualChildren<DependencyObject>(this);
-            foreach (var element in allVisualElements)
-            {
-                if (element is FrameworkElement fe)
-                {
-                    if (fe.Tag != null)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Type {fe.GetType()}, tag: {fe.Tag}");
-                    }
-                }
-            }
-
-            var borders = FindVisualChildren<Border>(this);
-            foreach (var border in borders)
-            {
-                border.MouseLeftButtonDown += (s, e)=> {
-                    var type = s.GetType();
-                    System.Diagnostics.Debug.WriteLine($"s is {type}");
-                    if (e.OriginalSource is Border evtborder)
-                    {
-                        var keystores = FindVisualChildren<KeyStoreControl>(evtborder);
-                        Console.WriteLine($"evtborder.tag: {evtborder.Tag}");
-                        var keyToSend = keystores.FirstOrDefault();
-                        if (keyToSend != null)
-                        {
-                            SendInputs.SendKeyPress(keyToSend.Key);
-                        }
-                    }
-                };
-            }
-
-            for (int i = 0; i < Items.Count; i++)
-            {
-                UIElement uiElement =
-                    (UIElement)ItemContainerGenerator.ContainerFromIndex(i);
-
-                if (uiElement is ContentControl cc)
-                {
-                    cc.ApplyTemplate();
-                    var t = cc.ContentTemplate;
-
-                    System.Diagnostics.Debug.WriteLine("");
-                }
-
-                if (uiElement is ContentPresenter cp && cp.Content is Key1)
-                {
-                    var result = cp.ApplyTemplate();
-                    var template = cp.ContentTemplate;
-
-                    System.Diagnostics.Debug.WriteLine("");
-                }
-            }
-
             var keys = GetLogicalChildren<Key1>(this);
 
             bool first = true;
-            bool newline = false;
             int previousKeyLeft = -1;
             int previousKeyTop = -1;
             int currentHorizontalSpacing = -1;
+            int currentVerticalSpacing = 0;
             foreach (var key in keys)
             {
                 if (key.HorizontalSpacing > 0)
                 {
                     currentHorizontalSpacing = key.HorizontalSpacing;
                 }
+                if (key.VerticalSpacing > 0)
+                {
+                    currentVerticalSpacing = key.VerticalSpacing;
+                }
                 if (first)
                 {
-                    key.Left = 0;
-                    key.Top = 0;
+                    if (key.Left == -1)
+                    {
+                        key.Left = 0;
+                    }
+                    if (key.Top == -1)
+                    {
+                        key.Top = 0;
+                    }
                     first = false;
                 }
-                else if (newline)
+                else if (key.NewLine)
                 {
-                    key.Left = 0;
-                    key.Top = previousKeyTop + key.VerticalSpacing;
-                    newline = false;
+                    if (key.Left == -1)
+                    {
+                        key.Left = 0;
+                    }
+                    if (key.Top == -1)
+                    {
+                        key.Top = previousKeyTop + currentVerticalSpacing;
+                    }
+                    previousKeyTop = key.Top;
                 }
                 else
                 {
                     key.Left = previousKeyLeft + currentHorizontalSpacing;
+                    key.Top = previousKeyTop;
                 }
                 previousKeyLeft = key.Left;
             }

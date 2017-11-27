@@ -5,15 +5,83 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <DataTemplate DataType="{x:Type local:Key1}" >
-            <Border BorderThickness="1" Focusable="False"
-                    Background="Transparent"
-                    BorderBrush="Black"
-                    Width="50" Height="50" Margin="{Binding Margin}" Tag="Key">
-                <StackPanel>
-                    <local:KeyStoreControl Key="{Binding Key}"/>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Label}" />
-                </StackPanel>
-            </Border>
+            <Grid>
+                <Border Width="60" Height="50" Tag="KeyPressed" Name="KeyPressed" >
+                    <TextBlock Tag="KeyPressed" Text="Hello"/>
+                </Border>
+                <Border BorderThickness="1"
+                        Focusable="False"
+                        CornerRadius="6"
+                        Width="50"
+                        Margin="{Binding Margin}" Name="border" RenderTransformOrigin="0.5,0.5" Tag="KeyOuter">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#DDDDDD" />
+                    </Border.Effect>
+                    <Border.RenderTransform>
+                        <ScaleTransform/>
+                    </Border.RenderTransform>
+                </Border>
+                <Border Focusable="False" CornerRadius="6" BorderThickness="1" BorderBrush="Transparent"
+                    Margin="{Binding Margin}" Tag="KeyInner"
+                    Name="border2"
+                        Width="50"
+                    RenderTransformOrigin="0.5,0.5"
+                    >
+                    <Grid>
+                        <local:KeyStoreControl Key="{Binding Key}" Tag="{Binding Tag}"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Label}" FontFamily="Arial" FontSize="20"/>
+                    </Grid>
+                    <Border.RenderTransform>
+                        <ScaleTransform/>
+                    </Border.RenderTransform>
+                </Border>
+            </Grid>
+            <DataTemplate.Triggers>
+                <EventTrigger RoutedEvent="PreviewMouseLeftButtonDown">
+                    <BeginStoryboard>
+                        <Storyboard TargetName="border">
+                            <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
+                            <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                    <BeginStoryboard>
+                        <Storyboard TargetName="border2">
+                            <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
+                            <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                    <BeginStoryboard>
+                        <Storyboard TargetName="KeyPressed">
+                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Hidden}"/>
+                                <DiscreteObjectKeyFrame KeyTime="00:00:01.4000000" Value="{x:Static Visibility.Visible}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="PreviewMouseLeftButtonUp">
+                    <BeginStoryboard>
+                        <Storyboard TargetName="border">
+                        <DoubleAnimation From="0.9" To="1" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
+                        <DoubleAnimation From="0.9" To="1" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
+                    </Storyboard>
+                    </BeginStoryboard>
+                    <BeginStoryboard>
+                        <Storyboard TargetName="border2">
+                            <DoubleAnimation From="0.9" To="1" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
+                            <DoubleAnimation From="0.9" To="1" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <DataTrigger Binding="{Binding Tag, Converter={local:TagConverter}}" Value="Delete">
+                    <Setter Property="Width" Value="100" TargetName="border"/>
+                    <Setter Property="Width" Value="100" TargetName="border2"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Tag, Converter={local:TagConverter}}" Value="Clear">
+                    <Setter Property="Width" Value="100" TargetName="border"/>
+                    <Setter Property="Width" Value="100" TargetName="border2"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
     </Application.Resources>
 </Application>
