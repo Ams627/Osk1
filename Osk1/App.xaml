@@ -2,18 +2,36 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Osk1"
-             StartupUri="MainWindow.xaml">
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
+             StartupUri="MainWindow.xaml"
+             >
     <Application.Resources>
         <DataTemplate DataType="{x:Type local:Key1}" >
+            <DataTemplate.Resources>
+                <UIElement x:Key="AnimationPlaceholder">
+                    <UIElement.RenderTransform>
+                        <ScaleTransform/>
+                    </UIElement.RenderTransform>
+                </UIElement>
+                <Storyboard x:Key="Storyboard1">
+                    <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" Storyboard.Target="{StaticResource AnimationPlaceholder}" />
+                    <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" Storyboard.Target="{StaticResource AnimationPlaceholder}" />
+                </Storyboard>
+            </DataTemplate.Resources>
             <Grid>
                 <Border Width="60" Height="50" Tag="KeyPressed" Name="KeyPressed" >
-                    <TextBlock Tag="KeyPressed" Text="Hello"/>
+                    <!-- eventually will show a quick flash of the key pressed like an android keyboard -->
+                    <TextBlock Tag="KeyPressed" Text="" Visibility="Hidden"/>
                 </Border>
                 <Border BorderThickness="1"
                         Focusable="False"
                         CornerRadius="6"
                         Width="50"
-                        Margin="{Binding Margin}" Name="border" RenderTransformOrigin="0.5,0.5" Tag="KeyOuter">
+                        Margin="{Binding Margin}" Name="border" RenderTransformOrigin="0.5,0.5" Tag="KeyOuter"
+                        >
+                    <Border.Resources>
+                        <s:String x:Key="AnimationTarget">border</s:String>
+                    </Border.Resources>
                     <Border.Effect>
                         <DropShadowEffect Color="#DDDDDD" />
                     </Border.Effect>
@@ -35,15 +53,24 @@
                         <ScaleTransform/>
                     </Border.RenderTransform>
                 </Border>
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="PreviewMouseLeftButtonDown">
+                        <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
+                    </EventTrigger>
+                </Grid.Triggers>
             </Grid>
+
             <DataTemplate.Triggers>
-                <EventTrigger RoutedEvent="PreviewMouseLeftButtonDown">
-                    <BeginStoryboard>
-                        <Storyboard TargetName="border">
-                            <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
-                            <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
-                        </Storyboard>
-                    </BeginStoryboard>
+
+                <!--<EventTrigger RoutedEvent="PreviewMouseLeftButtonDown">
+                    -->
+                <!--<BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>-->
+                <!--<Storyboard TargetName="border">
+                        <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
+                        <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
+                    </Storyboard>-->
+                <!--
+
                     <BeginStoryboard>
                         <Storyboard TargetName="border2">
                             <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
@@ -74,13 +101,16 @@
                     </BeginStoryboard>
                 </EventTrigger>
                 <DataTrigger Binding="{Binding Tag, Converter={local:TagConverter}}" Value="Delete">
-                    <Setter Property="Width" Value="100" TargetName="border"/>
+                    -->
+                <!--<Setter Property="Width" Value="100" TargetName="border"/>-->
+                <!--
                     <Setter Property="Width" Value="100" TargetName="border2"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Tag, Converter={local:TagConverter}}" Value="Clear">
-                    <Setter Property="Width" Value="100" TargetName="border"/>
-                    <Setter Property="Width" Value="100" TargetName="border2"/>
-                </DataTrigger>
+                    -->
+                <!--<Setter Property="Width" Value="100" TargetName="border"/>-->
+                <!--<Setter Property="Width" Value="100" TargetName="border2"/>-->
+                <!--</DataTrigger>-->
             </DataTemplate.Triggers>
         </DataTemplate>
     </Application.Resources>

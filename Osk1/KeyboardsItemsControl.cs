@@ -36,15 +36,12 @@ namespace Osk1
         public static readonly DependencyProperty DefaultAlignmentProperty =
             DependencyProperty.Register("DefaultAlignment", typeof(bool), typeof(KeyboardItemsControl), new PropertyMetadata(true));
 
-
-
         public bool DefaultSize
         {
             get { return (bool)GetValue(DefaultSizeProperty); }
             set { SetValue(DefaultSizeProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for DefaultSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DefaultSizeProperty =
             DependencyProperty.Register("DefaultSize", typeof(bool), typeof(KeyboardItemsControl), new PropertyMetadata(true));
 
@@ -93,27 +90,14 @@ namespace Osk1
 
         private void KeyboardItemsControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //            Utils.PrintChildren("Loaded", this);
-
-
-            //var children = FindVisualChildren<DependencyObject>(this);
-            //foreach (var child in children)
-            //{
-            //    if (child is FrameworkElement f)
-            //    {
-            //        var margin = f.Margin;
-            //        var tag = f.Tag;
-            //        string tagDebug = tag == null ? "" : $" tag: {tag.ToString()}";
-            //        System.Diagnostics.Debug.WriteLine($"Type {f.GetType()}, Margin {margin.Left},{margin.Top},{margin.Right},{margin.Bottom} {tagDebug}");
-            //    }
-            //}
-
             var borders = FindVisualChildren<Border>(this);
 
             foreach (var border in borders)
             {
                 if (border.Tag is string str0 && str0 == "KeyPressed")
                 {
+                    // this is the "Android" key pressed rectangle - the character corresponding to the key that is pressed appears in
+                    // a small rectangle.
                     border.HorizontalAlignment = HorizontalAlignment.Left;
                     border.VerticalAlignment = VerticalAlignment.Top;
                 }
