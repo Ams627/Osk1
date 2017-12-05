@@ -8,14 +8,10 @@
     <Application.Resources>
         <DataTemplate DataType="{x:Type local:Key1}" >
             <DataTemplate.Resources>
-                <UIElement x:Key="AnimationPlaceholder">
-                    <UIElement.RenderTransform>
-                        <ScaleTransform/>
-                    </UIElement.RenderTransform>
-                </UIElement>
+                <UIElement x:Key="AnimationPlaceholder" Opacity="1" />
                 <Storyboard x:Key="Storyboard1">
-                    <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" Storyboard.Target="{StaticResource AnimationPlaceholder}" />
-                    <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" Storyboard.Target="{StaticResource AnimationPlaceholder}" />
+                    <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.Target="{StaticResource AnimationPlaceholder}" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
+                    <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.Target="{StaticResource AnimationPlaceholder}" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" />
                 </Storyboard>
             </DataTemplate.Resources>
             <Grid>
@@ -36,7 +32,7 @@
                         <DropShadowEffect Color="#DDDDDD" />
                     </Border.Effect>
                     <Border.RenderTransform>
-                        <ScaleTransform/>
+                        <ScaleTransform />
                     </Border.RenderTransform>
                 </Border>
                 <Border Focusable="False" CornerRadius="6" BorderThickness="1" BorderBrush="Transparent"
@@ -50,7 +46,7 @@
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Label}" FontFamily="Arial" FontSize="20"/>
                     </Grid>
                     <Border.RenderTransform>
-                        <ScaleTransform/>
+                        <ScaleTransform />
                     </Border.RenderTransform>
                 </Border>
                 <Grid.Triggers>
