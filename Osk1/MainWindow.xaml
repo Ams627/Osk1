@@ -10,50 +10,10 @@
         Width="1024"
         Left="1920"
         >
-    <Grid Margin="0,0,0,0">
+    <Grid Margin="0,100,0,0">
         <StackPanel>
-            <TextBox Text="A" Width="200" Height="50" HorizontalAlignment="Left"/>
-            <local:KeyboardItemsControl Margin="0,0,-0.4,0">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <local:Key1 Label="Q" Key="KEY_Q" HorizontalSpacing="60" VerticalSpacing="60"/>
-                <local:Key1 Label="W" Key="KEY_W"/>
-                <local:Key1 Label="E" Key="KEY_E"/>
-                <local:Key1 Label="R" Key="KEY_R"/>
-                <local:Key1 Label="T" Key="KEY_T"/>
-                <local:Key1 Label="Y" Key="KEY_Y"/>
-                <local:Key1 Label="U" Key="KEY_U"/>
-                <local:Key1 Label="I" Key="KEY_I"/>
-                <local:Key1 Label="O" Key="KEY_O"/>
-                <local:Key1 Label="P" Key="KEY_P"/>
-                <local:Key1 Label="Delete" Key="BACKSPACE" Tag="Delete"/>
-
-
-                <local:Key1 Label="A" Key="KEY_A" NewLine="True" Left="20"/>
-                <local:Key1 Label="S" Key="KEY_S"/>
-                <local:Key1 Label="D" Key="KEY_D"/>
-                <local:Key1 Label="F" Key="KEY_F"/>
-                <local:Key1 Label="G" Key="KEY_G"/>
-                <local:Key1 Label="H" Key="KEY_H"/>
-                <local:Key1 Label="J" Key="KEY_J"/>
-                <local:Key1 Label="K" Key="KEY_K"/>
-                <local:Key1 Label="L" Key="KEY_L"/>
-
-                <local:Key1 Label="Clear" Key="OEM_CLEAR" Tag="Delete"/>
-
-                <local:Key1 Label="Z" Key="KEY_Z" NewLine="True" Left="40"/>
-                <local:Key1 Label="X" Key="KEY_X"/>
-                <local:Key1 Label="C" Key="KEY_C"/>
-                <local:Key1 Label="V" Key="KEY_V"/>
-                <local:Key1 Label="B" Key="KEY_B"/>
-                <local:Key1 Label="N" Key="KEY_N"/>
-                <local:Key1 Label="M" Key="KEY_M"/>
-
-                <!--<local:Key1 Label="CAD" Key="DELETE" HorizontalSpacing="150" Modifiers="Ctrl" />-->
-            </local:KeyboardItemsControl>
+            <TextBox Text="A" Width="200" Height="50" FontFamily="Segoe UI" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <local:KOsk1/>
         </StackPanel>
     </Grid>
 </Window>

@@ -6,13 +6,21 @@
     <Application.Resources>
         <DataTemplate DataType="{x:Type local:Key1}" >
             <Grid>
-                <Border Width="60" Height="50" Tag="KeyPressed" Name="KeyPressed" >
-                    <TextBlock Tag="KeyPressed" Text="Hello"/>
+                <Border Width="30" Height="50"
+                        Tag="KeyPressed" Name="KeyPressed" Margin="{Binding Margin}" Visibility="Hidden"
+                        HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1" BorderBrush="Red"
+                        Background="White"
+                        >
+                    <Border.RenderTransform>
+                        <TranslateTransform X="-10" Y="-30"/>
+                    </Border.RenderTransform>
+                    <TextBlock Tag="KeyPressed" Text="{Binding Label}" SnapsToDevicePixels="True" FontSize="30" />
                 </Border>
                 <Border BorderThickness="1"
                         Focusable="False"
                         CornerRadius="6"
                         Width="50"
+                        Background="Transparent"
                         Margin="{Binding Margin}" Name="border" RenderTransformOrigin="0.5,0.5" Tag="KeyOuter">
                     <Border.Effect>
                         <DropShadowEffect Color="#DDDDDD" />
@@ -42,34 +50,32 @@
                         <Storyboard TargetName="border">
                             <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
                             <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
+                            <DoubleAnimation From="0.9" To="1" BeginTime="0:0:0.2" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
+                            <DoubleAnimation From="0.9" To="1" BeginTime="0:0:0.2" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
                         </Storyboard>
                     </BeginStoryboard>
                     <BeginStoryboard>
                         <Storyboard TargetName="border2">
                             <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
                             <DoubleAnimation From="1" To="0.9" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
+                            <DoubleAnimation From="0.9" To="1" BeginTime="0:0:0.2" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
+                            <DoubleAnimation From="0.9" To="1" BeginTime="0:0:0.2" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
                         </Storyboard>
                     </BeginStoryboard>
                     <BeginStoryboard>
                         <Storyboard TargetName="KeyPressed">
                             <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Hidden}"/>
-                                <DiscreteObjectKeyFrame KeyTime="00:00:01.4000000" Value="{x:Static Visibility.Visible}"/>
+                                <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Visible</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                                <DiscreteObjectKeyFrame KeyTime="00:00:00.2">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Hidden</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
                             </ObjectAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="PreviewMouseLeftButtonUp">
-                    <BeginStoryboard>
-                        <Storyboard TargetName="border">
-                        <DoubleAnimation From="0.9" To="1" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
-                        <DoubleAnimation From="0.9" To="1" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
-                    </Storyboard>
-                    </BeginStoryboard>
-                    <BeginStoryboard>
-                        <Storyboard TargetName="border2">
-                            <DoubleAnimation From="0.9" To="1" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" />
-                            <DoubleAnimation From="0.9" To="1" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>

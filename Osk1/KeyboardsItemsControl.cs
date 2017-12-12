@@ -25,6 +25,16 @@ namespace Osk1
         public KeyboardItemsControl()
         {
             this.Loaded += KeyboardItemsControl_Loaded;
+
+            // set the panel type for the items control to grid:
+            FrameworkElementFactory factoryPanel = new FrameworkElementFactory(typeof(Grid));
+            factoryPanel.SetValue(StackPanel.IsItemsHostProperty, true);
+            ItemsPanelTemplate template = new ItemsPanelTemplate
+            {
+                VisualTree = factoryPanel
+            };
+
+            ItemsPanel = template;
         }
 
         public bool DefaultAlignment
@@ -112,12 +122,7 @@ namespace Osk1
 
             foreach (var border in borders)
             {
-                if (border.Tag is string str0 && str0 == "KeyPressed")
-                {
-                    border.HorizontalAlignment = HorizontalAlignment.Left;
-                    border.VerticalAlignment = VerticalAlignment.Top;
-                }
-                else if (border.Tag is string str && (str == "KeyInner" || str == "KeyOuter"))
+                if (border.Tag is string str && (str == "KeyInner" || str == "KeyOuter"))
                 {
                     if (double.IsNaN(border.Height) || border.Height <= 0)
                     {
@@ -144,12 +149,17 @@ namespace Osk1
 
                         border.MouseLeftButtonDown += (mouseSender, eventargs) =>
                         {
+                            System.Diagnostics.Debug.WriteLine($"{DateTime.Now.Ticks % 1000000}");
                             var type = mouseSender.GetType();
                             if (mouseSender is Border evtborder)
                             {
                                 var keystores = FindVisualChildren<KeyStoreControl>(evtborder);
-                                Console.WriteLine($"evtborder.tag: {evtborder.Tag}");
+                                if (keystores.Count() > 1)
+                                {
+                                    System.Diagnostics.Debug.WriteLine($"Keystores > 1");
+                                }
                                 var keyToSend = keystores.FirstOrDefault();
+                                System.Diagnostics.Debug.WriteLine($"evtborder.tag: {evtborder.Tag} {keyToSend.Key}");
                                 if (keyToSend != null)
                                 {
                                     SendInputs.SendKeyPress(keyToSend.Key);

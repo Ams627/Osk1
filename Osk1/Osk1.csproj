@@ -58,11 +58,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ConverterBase.cs" />
+    <Compile Include="KOsk1.xaml.cs">
+      <DependentUpon>KOsk1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SendInputs.cs" />
     <Compile Include="KeyStoreControl.cs" />
     <Compile Include="TagConverter.cs" />
     <Compile Include="ThicknessConverter.cs" />
     <Compile Include="Utils.cs" />
+    <Page Include="KOsk1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
