@@ -61,6 +61,9 @@
     <Compile Include="KOsk1.xaml.cs">
       <DependentUpon>KOsk1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NumPad.xaml.cs">
+      <DependentUpon>NumPad.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SendInputs.cs" />
     <Compile Include="KeyStoreControl.cs" />
     <Compile Include="TagConverter.cs" />
@@ -84,6 +87,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NumPad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MouseClick.cs" />

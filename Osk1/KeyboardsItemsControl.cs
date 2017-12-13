@@ -178,7 +178,7 @@ namespace Osk1
         {
             base.OnApplyTemplate();
 
-            var keys = GetLogicalChildren<Key1>(this);
+            var keys = GetLogicalChildren<QQKey1>(this);
 
             bool first = true;
             int previousKeyLeft = -1;

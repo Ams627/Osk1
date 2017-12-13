@@ -5,7 +5,7 @@ using System.Windows.Input;
 namespace Osk1
 {
 
-    public class Key1 
+    public class QQKey1 
     {
         /// <summary>
         /// Left margin for the key. Each successive key in a KeyboardItemsContainer will add Horizontal Spacing to

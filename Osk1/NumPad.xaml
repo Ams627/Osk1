@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Osk1.NumPad"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Osk1"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <local:KeyboardItemsControl Focusable="False">
+            <local:QQKey1 Label="7" Key="KEY_7" HorizontalSpacing="60" VerticalSpacing="60"/>
+            <local:QQKey1 Label="8" Key="KEY_8" />
+            <local:QQKey1 Label="9" Key="KEY_9" />
+            <local:QQKey1 Label="4" Key="KEY_4"  NewLine="True"/>
+            <local:QQKey1 Label="5" Key="KEY_5" />
+            <local:QQKey1 Label="6" Key="KEY_6" />
+            <local:QQKey1 Label="1" Key="KEY_1"  NewLine="True"/>
+            <local:QQKey1 Label="2" Key="KEY_2" />
+            <local:QQKey1 Label="3" Key="KEY_3" />
+            <local:QQKey1 Label="0" Key="KEY_0"  NewLine="True"/>
+        </local:KeyboardItemsControl>
+    </Grid>
+</UserControl>

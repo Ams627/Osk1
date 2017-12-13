@@ -13,9 +13,22 @@
         >
     <Grid Margin="0,100,0,0">
         <StackPanel>
-            <TextBox Name="tb" Width="200" Height="50" FontFamily="Segoe UI" FontSize="24" HorizontalAlignment="Center"
+            <TabControl KeyboardNavigation.TabNavigation="None">
+                <TabItem Header="Qwerty">
+                    <StackPanel>
+                        <TextBox Name="tb" Width="200" Height="50" FontFamily="Segoe UI" FontSize="24" HorizontalAlignment="Center"
                      VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
-            <local:KOsk1 Focusable="False"/>
+                        <local:KOsk1 Focusable="False"/>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Number pad">
+                    <StackPanel>
+                        <TextBox Name="tb2" Width="200" Height="50" FontFamily="Segoe UI" FontSize="24" HorizontalAlignment="Center"
+                     VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
+                        <local:NumPad Focusable="False"/>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
         </StackPanel>
     </Grid>
 </Window>
