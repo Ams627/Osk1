@@ -5,7 +5,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <DataTemplate DataType="{x:Type local:Key1}" >
-            <Grid>
+            <Grid KeyboardNavigation.TabNavigation="None">
                 <Border Width="30" Height="50"
                         Tag="KeyPressed" Name="KeyPressed" Margin="{Binding Margin}" Visibility="Hidden"
                         HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1" BorderBrush="Red"
@@ -14,7 +14,7 @@
                     <Border.RenderTransform>
                         <TranslateTransform X="-10" Y="-30"/>
                     </Border.RenderTransform>
-                    <TextBlock Tag="KeyPressed" Text="{Binding Label}" SnapsToDevicePixels="True" FontSize="30" />
+                    <TextBlock Tag="KeyPressed" Text="{Binding Label}" SnapsToDevicePixels="True" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Border>
                 <Border BorderThickness="1"
                         Focusable="False"
@@ -81,6 +81,7 @@
                 </EventTrigger>
                 <DataTrigger Binding="{Binding Tag, Converter={local:TagConverter}}" Value="Delete">
                     <Setter Property="Width" Value="100" TargetName="border"/>
+                    <Setter Property="Background" Value="AliceBlue" TargetName="border"/>
                     <Setter Property="Width" Value="100" TargetName="border2"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Tag, Converter={local:TagConverter}}" Value="Clear">

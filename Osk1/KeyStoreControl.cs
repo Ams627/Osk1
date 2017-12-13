@@ -29,9 +29,5 @@ namespace Osk1
 
         public bool IsAltPressed { get; set; }
         public bool IsCtrlPressed { get; set; }
-        static KeyStoreControl()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(KeyStoreControl), new FrameworkPropertyMetadata(typeof(KeyStoreControl)));
-        }
     }
 }

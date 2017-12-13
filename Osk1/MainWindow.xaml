@@ -9,11 +9,13 @@
         Height="768"
         Width="1024"
         Left="1920"
+        FocusManager.FocusedElement="{Binding ElementName=tb}"
         >
     <Grid Margin="0,100,0,0">
         <StackPanel>
-            <TextBox Text="A" Width="200" Height="50" FontFamily="Segoe UI" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <local:KOsk1/>
+            <TextBox Name="tb" Width="200" Height="50" FontFamily="Segoe UI" FontSize="24" HorizontalAlignment="Center"
+                     VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsHitTestVisible="False"/>
+            <local:KOsk1 Focusable="False"/>
         </StackPanel>
     </Grid>
 </Window>

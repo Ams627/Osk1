@@ -17,11 +17,6 @@ namespace Osk1
 {
     public class KeyboardItemsControl : ItemsControl
     {
-        static KeyboardItemsControl()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(KeyboardItemsControl), new FrameworkPropertyMetadata(typeof(KeyboardItemsControl)));
-        }
-
         public KeyboardItemsControl()
         {
             this.Loaded += KeyboardItemsControl_Loaded;
