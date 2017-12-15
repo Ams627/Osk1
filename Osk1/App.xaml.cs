@@ -23,14 +23,16 @@ namespace Osk1
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             var dictname = @"q:\temp\dictionary1.xaml";
-            using (var fs = new FileStream(dictname, FileMode.Open))
+            if (File.Exists(dictname))
             {
-                ResourceDictionary dic =
-                   (ResourceDictionary)XamlReader.Load(fs);
-                Resources.MergedDictionaries.Clear();
-                Resources.MergedDictionaries.Add(dic);
+                using (var fs = new FileStream(dictname, FileMode.Open))
+                {
+                    ResourceDictionary dic =
+                       (ResourceDictionary)XamlReader.Load(fs);
+                    Resources.MergedDictionaries.Clear();
+                    Resources.MergedDictionaries.Add(dic);
+                }
             }
-
             var window = new MainWindow();
             window.Show();
         }

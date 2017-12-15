@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:Osk1"
              Startup="Application_Startup">
     <Application.Resources>
-        <!--<DataTemplate DataType="{x:Type local:QQKey1}" >
+        <DataTemplate DataType="{x:Type local:QQKey1}" >
             <Grid KeyboardNavigation.TabNavigation="None">
                 <Border Width="30" Height="50"
                         Tag="KeyPressed" Name="KeyPressed" Margin="{Binding Margin}" Visibility="Hidden"
@@ -89,6 +89,6 @@
                     <Setter Property="Width" Value="100" TargetName="border2"/>
                 </DataTrigger>
             </DataTemplate.Triggers>
-        </DataTemplate>-->
+        </DataTemplate>
     </Application.Resources>
 </Application>
